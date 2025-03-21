@@ -40,7 +40,7 @@ const ToolsList = () => {
 
   const saveTools = async (newTools) => {
     try {
-      const toolsWithLastUsed = newTools.map(tool => ({
+      const toolsWithLastUsed = newTools.map((tool) => ({
         ...tool,
         lastUsed: tool.lastUsed || 0,
       }));
@@ -98,6 +98,7 @@ const ToolsList = () => {
             </View>
           </View>
         ))}
+        <View style={styles.spacer} />
       </ScrollView>
       <TouchableOpacity
         style={styles.addButton}
@@ -112,16 +113,18 @@ const ToolsList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#fff",
   },
   scrollContainer: {
     flex: 1,
+    padding: 20,
+    // marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    marginTop: 20,
     textAlign: "center",
   },
   toolItem: {
@@ -133,6 +136,9 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
+  },
+  spacer: {
+    height: 200,
   },
   toolName: {
     flex: 1,
