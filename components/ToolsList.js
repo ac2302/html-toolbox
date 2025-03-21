@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const ToolsList = () => {
   const [tools, setTools] = useState([]);
@@ -13,21 +19,21 @@ const ToolsList = () => {
 
   const loadTools = async () => {
     try {
-      const storedTools = await AsyncStorage.getItem('tools');
+      const storedTools = await AsyncStorage.getItem("tools");
       if (storedTools) {
         setTools(JSON.parse(storedTools));
       }
     } catch (error) {
-      console.error('Failed to load tools:', error);
+      console.error("Failed to load tools:", error);
     }
   };
 
   const saveTools = async (newTools) => {
     try {
-      await AsyncStorage.setItem('tools', JSON.stringify(newTools));
+      await AsyncStorage.setItem("tools", JSON.stringify(newTools));
       setTools(newTools);
     } catch (error) {
-      console.error('Failed to save tools:', error);
+      console.error("Failed to save tools:", error);
     }
   };
 
@@ -43,11 +49,25 @@ const ToolsList = () => {
       <ScrollView style={styles.scrollContainer}>
         {tools.map((tool, index) => (
           <View key={index} style={styles.toolItem}>
-            <TouchableOpacity style={styles.toolName} onPress={() => navigation.navigate('ToolView', { html: tool.html })}>
+            <TouchableOpacity
+              style={styles.toolName}
+              onPress={() =>
+                navigation.navigate("ToolView", { html: tool.html })
+              }
+            >
               <Text>{tool.name}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate('EditTool', { index, tool, saveTools, tools })}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("EditTool", {
+                    index,
+                    tool,
+                    saveTools,
+                    tools,
+                  })
+                }
+              >
                 <Text>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => deleteTool(index)}>
@@ -57,7 +77,10 @@ const ToolsList = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('CreateTool', { saveTools, tools })}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate("CreateTool", { saveTools, tools })}
+      >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -68,24 +91,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   scrollContainer: {
     flex: 1,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   toolItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 10,
     marginBottom: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
   },
@@ -93,22 +116,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: 'green',
+    backgroundColor: "green",
     width: 60,
     height: 60,
     borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   addButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 30,
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 10,
   },
 });
