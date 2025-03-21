@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
@@ -92,7 +93,22 @@ const ToolsList = () => {
                 <Text>🖊</Text>
               </TouchableOpacity>
               <Text>{"      "}</Text>
-              <TouchableOpacity onPress={() => deleteTool(index)}>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert(
+                    "Confirm Delete",
+                    `Are you sure you want to delete ${tool.name}?`,
+                    [
+                      {
+                        text: "Cancel",
+                        style: "cancel",
+                      },
+                      { text: "OK", onPress: () => deleteTool(index) },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+              >
                 <Text>🗑</Text>
               </TouchableOpacity>
             </View>
