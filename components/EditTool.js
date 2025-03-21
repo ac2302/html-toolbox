@@ -37,6 +37,13 @@ const EditTool = ({ navigation, route }) => {
         onChangeText={setHtml}
         multiline={true}
       />
+      <TouchableOpacity
+        style={[styles.deleteButton, !html ? styles.buttonDisabled : null]}
+        onPress={() => setHtml("")}
+        disabled={!html}
+      >
+        <Text style={styles.buttonText}>Delete HTML</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={updateTool}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
@@ -63,15 +70,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
   },
+  deleteButton: {
+    backgroundColor: "red",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+    marginBottom: 10,
+  },
   button: {
     backgroundColor: "blue",
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
+    marginBottom: 10,
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
+  },
+  buttonDisabled: {
+    backgroundColor: "gray",
+    marginBottom: 10,
   },
 });
 
