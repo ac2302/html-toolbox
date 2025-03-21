@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 
 const CreateTool = ({ navigation, route }) => {
@@ -38,7 +39,20 @@ const CreateTool = ({ navigation, route }) => {
       />
       <TouchableOpacity
         style={[styles.deleteButton, !html ? styles.buttonDisabled : null]}
-        onPress={() => setHtml("")}
+        onPress={() =>
+          Alert.alert(
+            "Confirm Delete",
+            "Are you sure you want to delete the HTML?",
+            [
+              {
+                text: "Cancel",
+                style: "cancel",
+              },
+              { text: "OK", onPress: () => setHtml("") },
+            ],
+            { cancelable: false }
+          )
+        }
         disabled={!html}
       >
         <Text style={styles.buttonText}>Delete HTML</Text>
