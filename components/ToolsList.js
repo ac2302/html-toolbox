@@ -68,10 +68,11 @@ const ToolsList = () => {
                   })
                 }
               >
-                <Text>Edit</Text>
+                <Text>🖊</Text>
               </TouchableOpacity>
+              <Text>{"      "}</Text>
               <TouchableOpacity onPress={() => deleteTool(index)}>
-                <Text>Delete</Text>
+                <Text>🗑</Text>
               </TouchableOpacity>
             </View>
           </View>
