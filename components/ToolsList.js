@@ -21,7 +21,10 @@ const ToolsList = () => {
     try {
       const storedTools = await AsyncStorage.getItem("tools");
       if (storedTools) {
-        setTools(JSON.parse(storedTools));
+        const parsedTools = JSON.parse(storedTools);
+        // Sort tools by last used timestamp, with most recent first
+        parsedTools.sort((a, b) => (b.lastUsed || 0) - (a.lastUsed || 0));
+        setTools(parsedTools);
       }
     } catch (error) {
       console.error("Failed to load tools:", error);
@@ -30,8 +33,12 @@ const ToolsList = () => {
 
   const saveTools = async (newTools) => {
     try {
-      await AsyncStorage.setItem("tools", JSON.stringify(newTools));
-      setTools(newTools);
+      const toolsWithLastUsed = newTools.map(tool => ({
+        ...tool,
+        lastUsed: tool.lastUsed || 0,
+      }));
+      await AsyncStorage.setItem("tools", JSON.stringify(toolsWithLastUsed));
+      setTools(toolsWithLastUsed);
     } catch (error) {
       console.error("Failed to save tools:", error);
     }
@@ -43,6 +50,12 @@ const ToolsList = () => {
     saveTools(newTools);
   };
 
+  const updateLastUsed = async (index) => {
+    const newTools = [...tools];
+    newTools[index].lastUsed = Date.now();
+    saveTools(newTools);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tools</Text>
@@ -51,9 +64,10 @@ const ToolsList = () => {
           <View key={index} style={styles.toolItem}>
             <TouchableOpacity
               style={styles.toolName}
-              onPress={() =>
-                navigation.navigate("ToolView", { html: tool.html })
-              }
+              onPress={() => {
+                updateLastUsed(index);
+                navigation.navigate("ToolView", { html: tool.html });
+              }}
             >
               <Text>{tool.name}</Text>
             </TouchableOpacity>
