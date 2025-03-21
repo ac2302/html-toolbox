@@ -7,7 +7,8 @@ import {
   ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 const ToolsList = () => {
   const [tools, setTools] = useState([]);
@@ -30,6 +31,12 @@ const ToolsList = () => {
       console.error("Failed to load tools:", error);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTools();
+    }, [])
+  );
 
   const saveTools = async (newTools) => {
     try {
